@@ -70,14 +70,14 @@ class RSpecView extends ScrollView
 
     console.log "[RSpec] running: #{command}"
 
-    terminal = spawn("bash", ["-l"])
+    terminal = spawn("bash", cwd: projectPath, env: process.env)
 
     terminal.on 'close', @onClose
 
     terminal.stdout.on 'data', @onStdOut
     terminal.stderr.on 'data', @onStdErr
 
-    terminal.stdin.write("cd #{projectPath} && #{command}\n")
+    terminal.stdin.write("#{command}\n")
     terminal.stdin.write("exit\n")
 
   addOutput: (output) =>
